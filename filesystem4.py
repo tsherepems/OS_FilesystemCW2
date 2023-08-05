@@ -8,8 +8,10 @@ import sys
 
 filename =None
 directory_name=None
-CONFIG_FILE = "config.txt"
+# Get the current directory and use it as the location for the config file
+CONFIG_FILE = os.path.join(os.getcwd(), "config.txt")
 RECYCLE_BIN_DIR = "recycle_bin"
+
 
 
 def hash_password(password):
@@ -206,6 +208,16 @@ def move_file(source_file, destination_dir):
         return True, "File moved successfully!"
     except Exception as e:
         return False, str(e)
+    
+def change_permissions_octal(filename, permissions):
+    try:
+        # Convert the octal representation to an integer using the base 8
+        mode = int(permissions, 8)
+        os.chmod(filename, mode)
+        return True, "Permissions changed successfully!"
+    except Exception as e:
+        return False, str(e)
+
 
 def main_menu():
     print("\nSelect an option:")
@@ -228,8 +240,10 @@ def file_options(filename):
     print("9. Decrypt file")
     print("10. Copy file")
     print("11. move file")
-    print("12. Back to Main Menu")
+    print("12. change permissions linux")
+    print("13. Back to Main Menu")
     choice = input("Enter the file operation number: ")
+    
     if choice == '1':
         filename = input("Enter the filename: ")
         content = input("Enter the content to write to the file: ")
@@ -291,16 +305,21 @@ def file_options(filename):
          success, message = move_file(source_file, destination_dir)
          print(message)
     elif choice == '12':
+          filename = input("enter the filename")
+          permissions = input("enter pem like user1:(F)")  # Replace this with the desired permission string
+          print(message)
+          success, message = change_permissions_octal(filename, permissions)
+    elif choice == '13':
       return#back to main menu
     else:
          print("Invalid choice. Please try again.")
 
    
 
-    print(message)
+    #print(message)
     file_options(filename)
 
-def directory_options(directory_name=None):
+def directory_options(directory_name):
     print("\nDirectory Options:")
     print("1. Create a directory")
     print("2. List items in a directory")
@@ -327,12 +346,12 @@ def directory_options(directory_name=None):
         success, message = delete_directory(directory_name)
     elif choice == '4':
            # Compress a file or folder
-        item_path = input("Enter the folder path to compress: ")
+        item_path = input("Enter the folder path with name to compress: ")
         success, message = compress_item(item_path)
 
     elif choice == '5':
         # Decompress a folder
-        item_path = input("Enter the zip file path to decompress: ")
+        item_path = input("Enter the zip file path with name to decompress: ")
         success, message = decompress_item(item_path)
 
     elif choice == '6':
@@ -351,9 +370,7 @@ def directory_options(directory_name=None):
         
         
       
-
-    print(message)
-    directory_options()
+    directory_options(directory_name)
 
 def main():
     print("Welcome to the Simple File System!")
@@ -366,7 +383,7 @@ def main():
         if choice == '1':
             file_options(filename)
         elif choice == '2':
-            directory_options()
+            directory_options(directory_name)
         elif choice == '3':
              # Recycle Bin
              print("\nRecycle Bin Options:")
