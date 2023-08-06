@@ -5,11 +5,6 @@ from cryptography.fernet import Fernet
 import hashlib
 import sys
 
-def clear_screen():
-    if os.name == 'nt':  # For Windows
-        os.system('cls')
-    else:  # For Unix-based systems (Linux, macOS)
-        os.system('clear')
 
 class PasswordManager:
     def __init__(self):
@@ -232,7 +227,6 @@ def main_menu():
     print("4. Exit")
 
 def file_options_menu():
-    clear_screen()
     print("\nSelect a file option:")
     print("1. Create a new file")
     print("2. Read a file")
@@ -249,7 +243,6 @@ def file_options_menu():
     print("13. Return to main menu")
 
 def directory_options_menu():
-    clear_screen()
     print("\nSelect a directory option:")
     print("1. Create a new directory")
     print("2. Delete a directory")
@@ -260,7 +253,6 @@ def directory_options_menu():
     print("7. Return to main menu")
 
 def recycle_bin_menu():
-    clear_screen()
     print("\nSelect an option for Recycle Bin:")
     print("1. List items in Recycle Bin")
     print("2. Restore an item from Recycle Bin")
