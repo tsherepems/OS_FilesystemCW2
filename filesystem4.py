@@ -5,7 +5,6 @@ from cryptography.fernet import Fernet
 import hashlib
 import sys
 
-
 class PasswordManager:
     def __init__(self):
         self.CONFIG_FILE = os.path.join(os.getcwd(), "config.txt")
@@ -44,7 +43,6 @@ class FileSystem:
         self.password_manager = PasswordManager()
         self.filename = None
         self.directory_name = None
-        self.CONFIG_FILE = os.path.join(os.getcwd(), "config.txt")
         self.RECYCLE_BIN_DIR = "recycle_bin"
 
     def create_file(self, filename, content):
@@ -78,7 +76,6 @@ class FileSystem:
         except Exception as e:
             return False, str(e)   
 
-   
     def encrypt_file(self, filename, key):
         try:
             with open(filename, 'rb') as file:
